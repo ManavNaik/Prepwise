@@ -185,14 +185,20 @@ All colors MUST be HSL.
 @layer utilities {
   .gradient-primary {
     background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
   }
   
   .gradient-accent {
     background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
   }
   
   .gradient-hero {
     background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    background-clip: text;
   }
   
   .gradient-card {
