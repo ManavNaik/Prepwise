@@ -8,6 +8,12 @@ import Dashboard from "./pages/Dashboard";
 import Timetable from "./pages/Timetable";
 import Focus from "./pages/Focus";
 import Auth from "./pages/Auth";
+import Sessions from "./pages/Sessions";
+import AdminTimetable from "./pages/AdminTimetable";
+import AdminFocus from "./pages/AdminFocus";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminSessions from "./pages/AdminSessions";
+import AdminAuth from "./pages/AdminAuth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,8 +30,13 @@ const App = () => (
           <Route path="/timetable" element={<Timetable />} />
           <Route path="/focus" element={<Focus />} />
           <Route path="/auth" element={<Auth />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="/sessions" element={<Sessions />} />
+          <Route path="/admintimetable" element={<AdminTimetable />} />
+          <Route path="/adminfocus" element={<AdminFocus />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/adminsessions" element={<AdminSessions />} />
+          <Route path="/adminauth" element={<AdminAuth />} />
+          <Route path="*" element={<NotFound />} />          
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

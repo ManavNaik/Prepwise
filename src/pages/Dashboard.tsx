@@ -1,12 +1,17 @@
-import { Target, Calendar, Flame, Trophy, TrendingUp } from "lucide-react";
+// Updated Dashboard.tsx (Student-side)
+import { Target, Calendar, Flame, Trophy, TrendingUp, Bell } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import ProgressRing from "@/components/ProgressRing";
 import Navigation from "@/components/Navigation";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Dashboard = () => {
-  // Mock data - will be replaced with real data later
+  // Mock data
   const streakData = {
     current: 7,
     longest: 12,
@@ -27,6 +32,38 @@ const Dashboard = () => {
     { id: 2, title: "Audit Q&A", time: "Tomorrow, 4:00 PM", instructor: "CA Priya Patel" },
   ];
 
+  const achievements = [
+    { id: 1, name: "7-Day Streak", unlocked: true },
+    { id: 2, name: "Focus Master", unlocked: false },
+  ];
+
+  const mockNotifications = [
+    { id: 1, type: "motivational", message: "Great job on your 7-day streak! Keep it up!", date: "Now" },
+    { id: 2, type: "session", message: "New live session: GST Updates starting in 1 hour", date: "1h ago" },
+    { id: 3, type: "motivational", message: "You've completed 85% of your targets this week. Almost there!", date: "2h ago" },
+    { id: 4, type: "session", message: "New recorded session available: Advanced Auditing", date: "Yesterday" },
+  ];
+
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Show motivational toasts based on activity
+    if (streakData.current > 0) {
+      toast({
+        title: "Streak Alert",
+        description: `You're on a ${streakData.current}-day streak! Keep going!`,
+      });
+    }
+
+    // Show session notifications
+    mockNotifications.filter(n => n.type === "session").forEach(n => {
+      toast({
+        title: "New Session",
+        description: n.message,
+      });
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <Navigation />
@@ -41,18 +78,45 @@ const Dashboard = () => {
           <div className="flex gap-3">
             <Link to="/timetable">
               <Button variant="outline">
-                <Calendar className="w-4 h-4" />
-                View Timetable
+                <Calendar className="w-4 h-4 mr-2" />
+                Timetable
               </Button>
             </Link>
             <Link to="/focus">
               <Button variant="gradient">
-                <Target className="w-4 h-4" />
+                <Target className="w-4 h-4 mr-2" />
                 Start Focus
               </Button>
             </Link>
           </div>
         </div>
+
+        {/* Notifications */}
+        <Card className="p-6 shadow-medium">
+          <h3 className="text-xl font-heading font-bold flex items-center gap-2 mb-4">
+            <Bell className="w-5 h-5 text-primary" />
+            Notifications
+          </h3>
+          <ScrollArea className="h-[200px]">
+            <div className="space-y-3">
+              {mockNotifications.map(notif => (
+                <div key={notif.id} className="flex items-start gap-3 p-3 rounded-lg bg-secondary">
+                  <Bell className="w-5 h-5 mt-1 text-accent" />
+                  <div className="flex-1">
+                    <p className="text-sm">{notif.message}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{notif.date}</p>
+                  </div>
+                  <Badge variant={notif.type === "motivational" ? "default" : "secondary"}>
+                    {notif.type.charAt(0).toUpperCase() + notif.type.slice(1)}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+          <Button variant="outline" className="w-full mt-4">
+            View All Notifications
+          </Button>
+        </Card>
 
         {/* Streak Card */}
         <Card className="p-6 md:p-8 shadow-strong gradient-card border-none">
@@ -174,10 +238,17 @@ const Dashboard = () => {
 
           {/* Upcoming Sessions */}
           <Card className="p-6 shadow-medium">
-            <h3 className="text-xl font-heading font-bold flex items-center gap-2 mb-4">
-              <TrendingUp className="w-5 h-5 text-accent" />
-              Upcoming Sessions
-            </h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-heading font-bold flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-accent" />
+                Upcoming Sessions
+              </h3>
+              <Link to="/sessions">
+                <Button variant="outline" size="sm">
+                  View All
+                </Button>
+              </Link>
+            </div>
             
             <div className="space-y-3">
               {upcomingSessions.map((session) => (
@@ -190,13 +261,43 @@ const Dashboard = () => {
                   <p className="text-sm text-accent mt-2">By {session.instructor}</p>
                 </div>
               ))}
-              
-              <Button variant="outline" className="w-full mt-3">
-                View All Sessions
-              </Button>
             </div>
           </Card>
         </div>
+
+        {/* Achievements */}
+        <Card className="p-6 shadow-medium">
+          <h3 className="text-xl font-heading font-bold flex items-center gap-2 mb-4">
+            <Trophy className="w-5 h-5 text-primary" />
+            Achievements
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {achievements.map(ach => (
+              <div 
+                key={ach.id} 
+                className={`p-4 rounded-lg border ${ach.unlocked ? "bg-primary/10 border-primary/20" : "bg-secondary"}`}
+              >
+                <h4 className={`font-semibold ${ach.unlocked ? "" : "text-muted-foreground"}`}>
+                  {ach.name}
+                </h4>
+                <p className="text-sm text-muted-foreground">
+                  {ach.unlocked ? "Unlocked" : "Locked"}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Tips */}
+        <Card className="p-6 bg-accent/10 border-accent/20">
+          <h3 className="font-heading font-semibold mb-3 text-accent">💡 Study Tips</h3>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li>• Maintain your streak by completing daily tasks</li>
+            <li>• Aim for 100% in all rings for bonus achievements</li>
+            <li>• Take short breaks to maintain focus</li>
+            <li>• Review weak areas regularly</li>
+          </ul>
+        </Card>
       </main>
     </div>
   );

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { GraduationCap, Calendar, Target, Trophy, LogIn } from "lucide-react";
+import { GraduationCap, Calendar, Target, Trophy, LogIn, Video } from "lucide-react";
 import { Button } from "./ui/button";
 
 const Navigation = () => {
@@ -12,6 +12,7 @@ const Navigation = () => {
     { path: "/dashboard", label: "Dashboard", icon: Trophy },
     { path: "/timetable", label: "Timetable", icon: Calendar },
     { path: "/focus", label: "Focus", icon: Target },
+    { path: "/sessions", label: "Sessions", icon: Video }
   ];
 
   return (
@@ -23,7 +24,7 @@ const Navigation = () => {
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              CA Study Mentor
+              Prepwise
             </span>
           </Link>
           

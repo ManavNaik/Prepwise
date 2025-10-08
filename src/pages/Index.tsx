@@ -174,10 +174,10 @@ const Index = () => {
               <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
                 <GraduationCap className="w-5 h-5 text-white" />
               </div>
-              <span>CA Study Mentor</span>
+              <span>Prepwise </span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 CA Study Mentor. All rights reserved.
+              © 2024 Prepwise . All rights reserved.
             </p>
           </div>
         </div>
