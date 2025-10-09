@@ -16,6 +16,9 @@ import AdminSessions from "./pages/AdminSessions";
 import AdminAuth from "./pages/AdminAuth";
 import NotFound from "./pages/NotFound";
 
+import AdminMasters from "./pages/AdminMasters";
+
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -36,6 +39,9 @@ const App = () => (
           <Route path="/admindashboard" element={<AdminDashboard />} />
           <Route path="/adminsessions" element={<AdminSessions />} />
           <Route path="/adminauth" element={<AdminAuth />} />
+          
+          <Route path="/adminmasters" element={<AdminMasters />} />
+          
           <Route path="*" element={<NotFound />} />          
         </Routes>
       </BrowserRouter>

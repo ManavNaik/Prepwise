@@ -11,7 +11,8 @@ const AdminNavigation = () => {
     { path: "/admindashboard", label: "Dashboard", icon: Trophy },
     { path: "/admintimetable", label: "Timetables", icon: Calendar },
     { path: "/adminfocus", label: "Focus", icon: Target },
-    { path: "/adminsessions", label: "Sessions", icon: Video }
+    { path: "/adminsessions", label: "Sessions", icon: Video },
+    { path: "/adminmasters", label: "Masters", icon: GraduationCap }
   ];
 
   return (
